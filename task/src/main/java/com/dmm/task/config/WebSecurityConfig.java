@@ -37,6 +37,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.exceptionHandling().accessDeniedPage("/accessDeniedPage").and().authorizeRequests()
 				.antMatchers("/loginForm").permitAll() // loginFormは、全ユーザからのアクセスを許可
 				.anyRequest().authenticated(); // loginForm以外は、認証を求める
+		http.authorizeRequests().anyRequest().permitAll();
 
 		// ログイン設定
 		http.formLogin() // フォーム認証の有効化
