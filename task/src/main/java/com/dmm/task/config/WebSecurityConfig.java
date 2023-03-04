@@ -1,4 +1,4 @@
-package com.example.task.config;
+package com.dmm.task.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
