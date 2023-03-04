@@ -1,4 +1,4 @@
-package com.example.task.controller;
+package com.dmm.task.controller;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -14,10 +14,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.example.task.data.entity.Tasks;
-import com.example.task.data.repository.TasksRepository;
-import com.example.task.form.TaskForm;
-import com.example.task.service.AccountUserDetails;
+import com.dmm.task.data.entity.Tasks;
+import com.dmm.task.data.repository.TasksRepository;
+import com.dmm.task.form.TaskForm;
+import com.dmm.task.service.AccountUserDetails;
 
 @Controller
 public class TaskController {

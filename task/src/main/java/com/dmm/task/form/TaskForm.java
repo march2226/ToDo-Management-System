@@ -1,4 +1,4 @@
-package com.example.task.form;
+package com.dmm.task.form;
 
 import javax.validation.constraints.Size;
 
