@@ -31,15 +31,15 @@ public class TaskController {
 	 * @param model モデル
 	 * @return 遷移先
 	 */
-	@GetMapping("/tasks")
+	@GetMapping("/main")
 	public String task(Model model) {
 		// 逆順で投稿をすべて取得する
 		List<Tasks> list = repo.findAll(Sort.by(Sort.Direction.DESC, "id"));
 //    Collections.reverse(list); //普通に取得してこちらの処理でもOK
-		model.addAttribute("tasks", list);
+		model.addAttribute("main", list);
 		TaskForm postForm = new TaskForm();
 		model.addAttribute("postForm", postForm);
-		return "/tasks";
+		return "/main";
 	}
 
 	/**
@@ -58,7 +58,7 @@ public class TaskController {
 			List<Tasks> list = repo.findAll(Sort.by(Sort.Direction.DESC, "id"));
 			model.addAttribute("tasks", list);
 			model.addAttribute("taskForm", taskForm);
-			return "/tasks";
+			return "/main";
 		}
 
 		Tasks task = new Tasks();
@@ -69,7 +69,7 @@ public class TaskController {
 
 		repo.save(task);
 
-		return "redirect:/posts";
+		return "redirect:/main";
 	}
 
 	/**
@@ -78,9 +78,9 @@ public class TaskController {
 	 * @param id 投稿ID
 	 * @return 遷移先
 	 */
-	@PostMapping("/tasks/delete/{id}")
+	@PostMapping("/main/delete/{id}")
 	public String delete(@PathVariable Integer id) {
 		repo.deleteById(id);
-		return "redirect:/tasks";
+		return "redirect:/main";
 	}
 }
