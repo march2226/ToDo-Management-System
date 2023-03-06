@@ -7,7 +7,11 @@ import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
+
+import com.dmm.task.data.entity.Tasks;
 
 @Controller
 
@@ -27,7 +31,7 @@ public class TaskController {
 			day = day.plusDays(1);
 			week.add(day);
 		}
-
+		MultiValueMap<LocalDate, Tasks> tasks = new LinkedMultiValueMap<LocalDate, Tasks>();
 		month.add(week);
 		week = new ArrayList<>();
 		for (int i = 7; i <= day.lengthOfMonth(); i++) {
@@ -36,8 +40,9 @@ public class TaskController {
 			System.out.println(day.lengthOfMonth());
 		}
 
-		model.addAttribute("matrix", month);
+		model.addAttribute("tasks", tasks);
 		return null;
+		
 	}
 
 }
