@@ -58,11 +58,12 @@ public class TaskController {
 		w = day.getDayOfWeek();
 		int nextMonthDays = 7 - w.getValue();
 		for (int i = 1; i <= nextMonthDays; i++) {
-			month.add(week);
 			week.add(day);
+			day = day.plusDays(1);
 			System.out.println(i);
 			System.out.println(w.getValue());
 		}
+		month.add(week);
 		model.addAttribute("tasks", tasks);
 		model.addAttribute("matrix", month);
 
