@@ -18,6 +18,7 @@ import com.dmm.task.data.entity.Tasks;
 public class TaskController {
 	@GetMapping("/main")
 	public String task(Model model) {
+		MultiValueMap<LocalDate, Tasks> tasks = new LinkedMultiValueMap<LocalDate, Tasks>();
 		List<List<LocalDate>> month = new ArrayList<>();
 		List<LocalDate> week = new ArrayList<>();
 		LocalDate day;
@@ -30,19 +31,30 @@ public class TaskController {
 		for (int i = 1; i <= 7; i++) {
 			day = day.plusDays(1);
 			week.add(day);
+			
+			 w = day.getDayOfWeek();
 		}
-		MultiValueMap<LocalDate, Tasks> tasks = new LinkedMultiValueMap<LocalDate, Tasks>();
+		
 		month.add(week);
 		week = new ArrayList<>();
+
 		for (int i = 7; i <= day.lengthOfMonth(); i++) {
-			System.out.println(i);
-			System.out.println(w.getValue());
-			System.out.println(day.lengthOfMonth());
+			day = day.plusDays(1);
+			week.add(day);
+			
+			w = day.getDayOfWeek();  // 1日進めた曜日を取得                   
+            if (w == DayOfWeek.SATURDAY) {
+                month.add(week);
+                week = new ArrayList<>();
+                
+			}
 		}
 
 		model.addAttribute("tasks", tasks);
-		return null;
-		
+		model.addAttribute("matrix", month);
+
+		return "main";
+
 	}
 
 }
