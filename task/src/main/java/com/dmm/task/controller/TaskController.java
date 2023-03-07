@@ -29,27 +29,34 @@ public class TaskController {
 		day = day.minusDays(w.getValue());
 
 		for (int i = 1; i <= 7; i++) {
-			day = day.plusDays(1);
 			week.add(day);
-			
-			 w = day.getDayOfWeek();
+			day = day.plusDays(1);
+
+			w = day.getDayOfWeek();
+
+			System.out.println(i);
+
 		}
-		
 		month.add(week);
 		week = new ArrayList<>();
 
 		for (int i = 7; i <= day.lengthOfMonth(); i++) {
-			day = day.plusDays(1);
 			week.add(day);
-			
-			w = day.getDayOfWeek();  // 1日進めた曜日を取得                   
-            if (w == DayOfWeek.SATURDAY) {
-                month.add(week);
-                week = new ArrayList<>();
-                
-			}
-		}
 
+			w = day.getDayOfWeek(); // 1日進めた曜日を取得
+			if (w == DayOfWeek.SATURDAY) {
+				month.add(week);
+				
+				week = new ArrayList<>();
+
+				System.out.println(i);
+				System.out.println(w.getValue());
+				System.out.println(day.lengthOfMonth());
+			}
+			day = day.plusDays(1);
+		}
+		month.add(week);
+		week.add(day);
 		model.addAttribute("tasks", tasks);
 		model.addAttribute("matrix", month);
 
