@@ -22,12 +22,12 @@ public class TaskController {
 	
 	@Autowired
 	private TasksRepository repo;
-	List<Tasks> Tasks = repo.findAll(Sort.by(Sort.Direction.DESC, "id"));
 	@GetMapping("/main")
 	public String task(Model model) {
 		MultiValueMap<LocalDate, Tasks> tasks = new LinkedMultiValueMap<LocalDate, Tasks>();
 		List<List<LocalDate>> month = new ArrayList<>();
 		List<LocalDate> week = new ArrayList<>();
+		List<Tasks> tasks = repo.findAll(Sort.by(Sort.Direction.DESC, "id"));
 		LocalDate day;
 		day = LocalDate.now();
 		day = LocalDate.of(day.getYear(), day.getMonthValue(), 1);
