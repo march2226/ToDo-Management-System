@@ -31,7 +31,7 @@ public class PostController {
 	 * @param model モデル
 	 * @return 遷移先
 	 */
-	@GetMapping("/create")
+	@GetMapping("/main/create/{date}")
 	public String posts(Model model) {
 		// 逆順で投稿をすべて取得する
 		List<Posts> list = repo.findAll(Sort.by(Sort.Direction.DESC, "id"));
@@ -49,7 +49,7 @@ public class PostController {
 	 * @param user     ユーザー情報
 	 * @return 遷移先
 	 */
-	@PostMapping("/edit/create")
+	@PostMapping("/main/create")
 	public String create(@Validated PostForm postForm, BindingResult bindingResult,
 			@AuthenticationPrincipal AccountUserDetails user, Model model) {
 		// バリデーションの結果、エラーがあるかどうかチェック
@@ -58,7 +58,7 @@ public class PostController {
 			List<Posts> list = repo.findAll(Sort.by(Sort.Direction.DESC, "id"));
 			model.addAttribute("posts", list);
 			model.addAttribute("postForm", postForm);
-			return "/edit";
+			return "/main";
 		}
 
 		Posts post = new Posts();
@@ -69,7 +69,7 @@ public class PostController {
 
 		repo.save(post);
 
-		return "redirect:/posts";
+		return "redirect:/edit";
 	}
 
 	/**
@@ -78,9 +78,9 @@ public class PostController {
 	 * @param id 投稿ID
 	 * @return 遷移先
 	 */
-	@PostMapping("/edit/delete/{id}")
+	@PostMapping("/main/delete/{id}")
 	public String delete(@PathVariable Integer id) {
 		repo.deleteById(id);
-		return "redirect:/edit";
+		return "redirect:/main";
 	}
 }
