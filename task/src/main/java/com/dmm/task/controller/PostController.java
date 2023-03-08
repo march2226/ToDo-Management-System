@@ -36,7 +36,7 @@ public class PostController {
 		// 逆順で投稿をすべて取得する
 		List<Tasks> list = repo.findAll(Sort.by(Sort.Direction.DESC, "id"));
 //    Collections.reverse(list); //普通に取得してこちらの処理でもOK
-		model.addAttribute("posts", list);
+		model.addAttribute("tasks", list);
 		PostForm postForm = new PostForm();
 		model.addAttribute("postForm", postForm);
 		return "/create";
@@ -56,7 +56,7 @@ public class PostController {
 		if (bindingResult.hasErrors()) {
 			// エラーがある場合は投稿登録画面を返す
 			List<Tasks> list = repo.findAll(Sort.by(Sort.Direction.DESC, "id"));
-			model.addAttribute("posts", list);
+			model.addAttribute("tasks", list);
 			model.addAttribute("postForm", postForm);
 			return "/main";
 		}

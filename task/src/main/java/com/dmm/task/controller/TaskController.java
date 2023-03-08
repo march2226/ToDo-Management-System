@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.LinkedMultiValueMap;
@@ -21,6 +22,7 @@ public class TaskController {
 		MultiValueMap<LocalDate, Tasks> Tasks = new LinkedMultiValueMap<LocalDate, Tasks>();
 		List<List<LocalDate>> month = new ArrayList<>();
 		List<LocalDate> week = new ArrayList<>();
+		List<Tasks> list = repo.findAll(Sort.by(Sort.Direction.DESC, "id"));
 		LocalDate day;
 		day = LocalDate.now();
 		day = LocalDate.of(day.getYear(), day.getMonthValue(), 1);
