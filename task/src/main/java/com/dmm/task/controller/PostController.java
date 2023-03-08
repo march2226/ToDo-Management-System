@@ -39,7 +39,7 @@ public class PostController {
 		model.addAttribute("posts", list);
 		PostForm postForm = new PostForm();
 		model.addAttribute("postForm", postForm);
-		return "/posts";
+		return "/create";
 	}
 
 	/**
@@ -56,9 +56,9 @@ public class PostController {
 		if (bindingResult.hasErrors()) {
 			// エラーがある場合は投稿登録画面を返す
 			List<Posts> list = repo.findAll(Sort.by(Sort.Direction.DESC, "id"));
-			model.addAttribute("posts", list);
+			model.addAttribute("create", list);
 			model.addAttribute("postForm", postForm);
-			return "/main";
+			return "/create";
 		}
 
 		Posts post = new Posts();
@@ -81,6 +81,6 @@ public class PostController {
 	@PostMapping("/main/delete/{id}")
 	public String delete(@PathVariable Integer id) {
 		repo.deleteById(id);
-		return "redirect:/main";
+		return "redirect:/edit";
 	}
 }
