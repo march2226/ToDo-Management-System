@@ -11,14 +11,14 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import com.dmm.task.data.entity.Posts;
+import com.dmm.task.data.entity.Tasks;
 
 @Controller
 
 public class TaskController {
 	@GetMapping("/main")
 	public String task(Model model) {
-		MultiValueMap<LocalDate, Posts> tasks = new LinkedMultiValueMap<LocalDate, Posts>();
+		MultiValueMap<LocalDate, Tasks> Tasks = new LinkedMultiValueMap<LocalDate, Tasks>();
 		List<List<LocalDate>> month = new ArrayList<>();
 		List<LocalDate> week = new ArrayList<>();
 		LocalDate day;
@@ -64,7 +64,7 @@ public class TaskController {
 			System.out.println(w.getValue());
 		}
 		month.add(week);
-		model.addAttribute("tasks", tasks);
+		model.addAttribute("tasks", Tasks);
 		model.addAttribute("matrix", month);
 
 		return "main";
