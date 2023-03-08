@@ -58,7 +58,7 @@ public class PostController {
 			List<Posts> list = repo.findAll(Sort.by(Sort.Direction.DESC, "id"));
 			model.addAttribute("posts", list);
 			model.addAttribute("postForm", postForm);
-			return "/create";
+			return "/main";
 		}
 
 		Posts post = new Posts();
@@ -69,7 +69,7 @@ public class PostController {
 
 		repo.save(post);
 
-		return "redirect:/edit";
+		return "redirect:/main";
 	}
 
 	/**
@@ -81,6 +81,6 @@ public class PostController {
 	@PostMapping("/main/delete/{id}")
 	public String delete(@PathVariable Integer id) {
 		repo.deleteById(id);
-		return "redirect:/edit";
+		return "redirect:/main";
 	}
 }
