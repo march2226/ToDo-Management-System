@@ -11,14 +11,14 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import com.dmm.task.data.entity.Tasks;
+import com.dmm.task.data.entity.Posts;
 
 @Controller
 
 public class TaskController {
 	@GetMapping("/main")
 	public String task(Model model) {
-		MultiValueMap<LocalDate, Tasks> tasks = new LinkedMultiValueMap<LocalDate, Tasks>();
+		MultiValueMap<LocalDate, Posts> tasks = new LinkedMultiValueMap<LocalDate, Posts>();
 		List<List<LocalDate>> month = new ArrayList<>();
 		List<LocalDate> week = new ArrayList<>();
 		LocalDate day;
