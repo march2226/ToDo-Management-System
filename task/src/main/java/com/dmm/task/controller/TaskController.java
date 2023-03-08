@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,16 +14,20 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.dmm.task.data.entity.Tasks;
+import com.dmm.task.data.repository.TasksRepository;
 
 @Controller
 
 public class TaskController {
+	
+	@Autowired
+	private TasksRepository repo;
+	List<Tasks> Tasks = repo.findAll(Sort.by(Sort.Direction.DESC, "id"));
 	@GetMapping("/main")
 	public String task(Model model) {
-		MultiValueMap<LocalDate, Tasks> Tasks = new LinkedMultiValueMap<LocalDate, Tasks>();
+		MultiValueMap<LocalDate, Tasks> tasks = new LinkedMultiValueMap<LocalDate, Tasks>();
 		List<List<LocalDate>> month = new ArrayList<>();
 		List<LocalDate> week = new ArrayList<>();
-		List<Tasks> list = repo.findAll(Sort.by(Sort.Direction.DESC, "id"));
 		LocalDate day;
 		day = LocalDate.now();
 		day = LocalDate.of(day.getYear(), day.getMonthValue(), 1);
@@ -66,7 +71,7 @@ public class TaskController {
 			System.out.println(w.getValue());
 		}
 		month.add(week);
-		model.addAttribute("tasks", Tasks);
+		model.addAttribute("tasks", tasks);
 		model.addAttribute("matrix", month);
 
 		return "main";
