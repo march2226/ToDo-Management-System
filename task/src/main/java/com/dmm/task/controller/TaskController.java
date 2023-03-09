@@ -38,8 +38,9 @@ public class TaskController {
 		List<Tasks> list;
 		list = repo.findAll();
 		for (Tasks t : list) {
-			LocalDateTime dateTime = LocalDateTime.now();
-			LocalDate date = LocalDate.of(dateTime.getYear(), dateTime.getMonth(), dateTime.getDayOfMonth());
+			LocalDateTime localDateTime = LocalDateTime.now();
+			LocalDate localDate = localDateTime.toLocalDate();
+			
 			tasks.add(date,tasks);
 		}
 
