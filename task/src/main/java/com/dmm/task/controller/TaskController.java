@@ -37,7 +37,7 @@ public class TaskController {
 		List<Tasks> list;
 		list = repo.findAll();
 		for (Tasks t : list) {
-			tasks.add(tasks);
+			tasks.add(day,tasks);
 		}
 
 		for (int i = 1; i <= 7; i++) {
