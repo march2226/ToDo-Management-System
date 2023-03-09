@@ -2,6 +2,7 @@ package com.dmm.task.controller;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,7 +38,9 @@ public class TaskController {
 		List<Tasks> list;
 		list = repo.findAll();
 		for (Tasks t : list) {
-			tasks.add(day,tasks);
+			LocalDateTime dateTime = LocalDateTime.now();
+			LocalDate date = LocalDate.of(dateTime.getYear(), dateTime.getMonth(), dateTime.getDayOfMonth());
+			tasks.add(date,tasks);
 		}
 
 		for (int i = 1; i <= 7; i++) {
