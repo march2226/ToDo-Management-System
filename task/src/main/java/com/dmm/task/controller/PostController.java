@@ -72,6 +72,7 @@ public class PostController {
 		return "redirect:/main";
 	}
 
+	@GetMapping("/main/edit")
 	/**
 	 * 投稿を削除する
 	 * 
