@@ -58,16 +58,16 @@ public class PostController {
 			List<Tasks> list = repo.findAll(Sort.by(Sort.Direction.DESC, "id"));
 			model.addAttribute("tasks", list);
 			model.addAttribute("postForm", postForm);
-			return "/main";
+			return "/main/edit";
 		}
 
-		Tasks post = new Tasks();
-		post.setName(user.getName());
-		post.setTitle(postForm.getTitle());
-		post.setText(postForm.getText());
-		post.setDate(LocalDateTime.now());
+		Tasks task = new Tasks();
+		task.setName(user.getName());
+		task.setTitle(postForm.getTitle());
+		task.setText(postForm.getText());
+		task.setDate(LocalDateTime.now());
 
-		repo.save(post);
+		repo.save(task);
 
 		return "redirect:/main";
 	}
@@ -81,6 +81,6 @@ public class PostController {
 	@PostMapping("/main/delete/{id}")
 	public String delete(@PathVariable Integer id) {
 		repo.deleteById(id);
-		return "redirect:/main";
+		return "redirect:/main/edit";
 	}
 }
