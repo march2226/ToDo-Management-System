@@ -73,12 +73,10 @@ public class PostController {
 	}
 
 	@GetMapping("/main/edit/{id}")
-	public String edit(Model model,@PathVariable Integer id) {
-		List<Tasks> list = repo.findAll(Sort.by(Sort.Direction.DESC, "id"));
-		model.addAttribute("task",list);
-		PostForm postForm = new PostForm();
-		model.addAttribute("postForm", postForm);
-		return "/main/edit";
+	public String getById(Model model,@PathVariable Integer id) {
+		repo.getById(id);
+		model.addAttribute("task",id);
+		return "/create";
 		
 	}
 	/**
@@ -90,6 +88,6 @@ public class PostController {
 	@PostMapping("/main/delete/{id}")
 	public String delete(@PathVariable Integer id) {
 		repo.deleteById(id);
-		return "redirect:/main/edit";
+		return "redirect:/main";
 	}
 }
