@@ -76,7 +76,7 @@ public class PostController {
 	public String getById(Model model,@PathVariable Integer id) {
 		repo.getById(id);
 		model.addAttribute("task",id);
-		return "/create";
+		return "/edit";
 		
 	}
 	/**
