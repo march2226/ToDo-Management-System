@@ -73,12 +73,13 @@ public class PostController {
 	}
 
 	@GetMapping("/main/edit/{id}")
-	public String getById(Model model,@PathVariable Integer id) {
-		repo.getById(id);
-		model.addAttribute("task",id);
+	public String getById(Model model, @PathVariable Integer id) {
+		Tasks task = repo.getById(id);
+		model.addAttribute("task", task);
 		return "/edit";
-		
+
 	}
+
 	/**
 	 * 投稿を削除する
 	 * 
