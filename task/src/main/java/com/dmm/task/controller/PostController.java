@@ -83,7 +83,7 @@ public class PostController {
 	public String edit(@Validated PostForm postForm, BindingResult bindingResult,
 			Model model,@PathVariable Integer id) {
 		boolean done=true;
-		if(true) {
+		if(done) {
 			
 		}else {
 			
