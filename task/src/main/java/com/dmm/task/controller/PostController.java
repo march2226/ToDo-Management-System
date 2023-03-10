@@ -82,6 +82,12 @@ public class PostController {
 	@PostMapping("/main/edit/{id}")
 	public String edit(@Validated PostForm postForm, BindingResult bindingResult,
 			Model model,@PathVariable Integer id) {
+		boolean done=true;
+		if(true) {
+			
+		}else {
+			
+		}
 		
 		Tasks task = repo.getById(id);
 		model.addAttribute("task", task);
@@ -90,7 +96,7 @@ public class PostController {
 		task.setText(postForm.getText());
 		task.setDate(LocalDateTime.now());
 		repo.save(task);
-		return "/edit";
+		return "redirect:/main";
 	}
 
 	/**
