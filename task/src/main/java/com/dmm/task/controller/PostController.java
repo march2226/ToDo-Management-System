@@ -58,7 +58,7 @@ public class PostController {
 			List<Tasks> list = repo.findAll(Sort.by(Sort.Direction.DESC, "id"));
 			model.addAttribute("tasks", list);
 			model.addAttribute("postForm", postForm);
-			return "/main/edit";
+			return "/main";
 		}
 
 		Tasks task = new Tasks();
@@ -72,7 +72,15 @@ public class PostController {
 		return "redirect:/main";
 	}
 
-	@GetMapping("/main/edit")
+	@GetMapping("/main/edit/{id}")
+	public String edit(Model model,@PathVariable Integer id) {
+		List<Tasks> list = repo.findAll(Sort.by(Sort.Direction.DESC, "id"));
+		model.addAttribute("task",list);
+		PostForm postForm = new PostForm();
+		model.addAttribute("postForm", postForm);
+		return "/main/edit";
+		
+	}
 	/**
 	 * 投稿を削除する
 	 * 
