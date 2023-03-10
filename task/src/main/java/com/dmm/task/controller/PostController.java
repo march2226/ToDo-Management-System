@@ -79,6 +79,19 @@ public class PostController {
 		return "/edit";
 
 	}
+	@PostMapping("/main/edit/{id}")
+	public String edit(@Validated PostForm postForm, BindingResult bindingResult,
+			Model model,@PathVariable Integer id) {
+		
+		Tasks task = repo.getById(id);
+		model.addAttribute("task", task);
+		task.setName(task.getName());
+		task.setTitle(postForm.getTitle());
+		task.setText(postForm.getText());
+		task.setDate(LocalDateTime.now());
+		repo.save(task);
+		return "/edit";
+	}
 
 	/**
 	 * 投稿を削除する
