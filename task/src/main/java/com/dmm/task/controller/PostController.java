@@ -35,6 +35,7 @@ public class PostController {
 	 */
 	@GetMapping("/main/create/{date}")
 	public String posts(Model model, @PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date) {
+		model.addAttribute("date", date);
 	   		return "/create";
 	}
 
@@ -86,8 +87,6 @@ public class PostController {
 		task.setText(postForm.getText());
 		task.setDate(LocalDateTime.now());
 		task.setDone(postForm.isDone());
-		model.addAttribute("prev", task);
-		model.addAttribute("next", task);
 		repo.save(task);
 		return "redirect:/main";
 	}

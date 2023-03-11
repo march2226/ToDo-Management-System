@@ -37,7 +37,7 @@ public class TaskController {
 		day = day.minusDays(w.getValue());
 
 		List<Tasks> list;
-		list = repo.findByDateBetween(day,day.lengthOfMonth(),to);
+		list = repo.findAll();
 		for (Tasks t : list) {
 			
 			LocalDate date = t.getDate().toLocalDate();
