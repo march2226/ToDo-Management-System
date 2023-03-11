@@ -2,6 +2,7 @@ package com.dmm.task.controller;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,6 +28,7 @@ public class TaskController {
 	@GetMapping("/main")
 	public String task(Model model,@AuthenticationPrincipal AccountUserDetails user) {
 		MultiValueMap<LocalDate, Tasks> tasks = new LinkedMultiValueMap<LocalDate, Tasks>();
+		String name = user.getName();
 		List<List<LocalDate>> month = new ArrayList<>();
 		List<LocalDate> week = new ArrayList<>();
 		LocalDate day;
@@ -37,7 +39,7 @@ public class TaskController {
 		day = day.minusDays(w.getValue());
 
 		List<Tasks> list;
-		list = repo.findAll();
+		
 		for (Tasks t : list) {
 			
 			LocalDate date = t.getDate().toLocalDate();
@@ -53,6 +55,7 @@ public class TaskController {
 			
 			model.addAttribute("prev", day.minusMonths(1));
 			model.addAttribute("next", day.plusMonths(1));
+			LocalDate start = day;
 
 			System.out.println(day);
 
@@ -79,9 +82,16 @@ public class TaskController {
 		for (int i = 1; i <= nextMonthDays; i++) {
 			week.add(day);
 			day = day.plusDays(1);
+			LocalDate end = day;
 			
 			System.out.println(day);
 			}
+		LocalDateTime start;
+		LocalDateTime end;
+		Tasks task;
+		task.setName(user.getName());
+		list = repo.findByDateBetween(start,end,user.getName());
+		list = repo.findAllByDateBetween(start,end);
 		month.add(week);
 		model.addAttribute("tasks", tasks);
 		model.addAttribute("matrix", month);

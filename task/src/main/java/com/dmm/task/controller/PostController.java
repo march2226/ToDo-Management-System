@@ -85,7 +85,7 @@ public class PostController {
 		task.setName(task.getName());
 		task.setTitle(postForm.getTitle());
 		task.setText(postForm.getText());
-		task.setDate(LocalDateTime.now());
+		task.setDate(postForm.getDate());
 		task.setDone(postForm.isDone());
 		repo.save(task);
 		return "redirect:/main";
