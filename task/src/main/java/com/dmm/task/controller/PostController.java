@@ -34,14 +34,8 @@ public class PostController {
 	 * @return 遷移先
 	 */
 	@GetMapping("/main/create/{date}")
-	public String posts(Model model,@PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date) {
-		// 逆順で投稿をすべて取得する
-		List<Tasks> list = repo.findAll(Sort.by(Sort.Direction.DESC, "id"));
-//    Collections.reverse(list); //普通に取得してこちらの処理でもOK
-		model.addAttribute("tasks", list);
-		PostForm postForm = new PostForm();
-		model.addAttribute("postForm", postForm);
-		return "/create";
+	public String posts(Model model, @PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date) {
+	   		return "/create";
 	}
 
 	/**
@@ -60,8 +54,6 @@ public class PostController {
 			List<Tasks> list = repo.findAll(Sort.by(Sort.Direction.DESC, "id"));
 			model.addAttribute("tasks", list);
 			model.addAttribute("postForm", postForm);
-			model.addAttribute("prev","yyyy-MM-dd");
-			model.addAttribute("next","yyyy-MM-dd");
 			return "/main";
 		}
 
@@ -94,6 +86,8 @@ public class PostController {
 		task.setText(postForm.getText());
 		task.setDate(LocalDateTime.now());
 		task.setDone(postForm.isDone());
+		model.addAttribute("prev", task);
+		model.addAttribute("next", task);
 		repo.save(task);
 		return "redirect:/main";
 	}
