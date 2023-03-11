@@ -37,7 +37,7 @@ public class TaskController {
 		day = day.minusDays(w.getValue());
 
 		List<Tasks> list;
-		list = repo.findByDateBetween(start,end,user);
+		list = repo.findByDateBetween(day,day.lengthOfMonth(),to);
 		for (Tasks t : list) {
 			
 			LocalDate date = t.getDate().toLocalDate();
@@ -51,7 +51,8 @@ public class TaskController {
 
 			w = day.getDayOfWeek();
 			
-			localDate start=day.getDate();
+			model.addAttribute("prev", day.minusMonths(1));
+			model.addAttribute("next", day.plusMonths(1));
 
 			System.out.println(day);
 
@@ -79,7 +80,6 @@ public class TaskController {
 			week.add(day);
 			day = day.plusDays(1);
 			
-			localDate end=day.getDate();
 			System.out.println(day);
 			}
 		month.add(week);
