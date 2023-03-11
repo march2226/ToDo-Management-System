@@ -1,10 +1,12 @@
 package com.dmm.task.controller;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,7 +34,7 @@ public class PostController {
 	 * @return 遷移先
 	 */
 	@GetMapping("/main/create/{date}")
-	public String posts(Model model) {
+	public String posts(Model model,@PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date) {
 		// 逆順で投稿をすべて取得する
 		List<Tasks> list = repo.findAll(Sort.by(Sort.Direction.DESC, "id"));
 //    Collections.reverse(list); //普通に取得してこちらの処理でもOK
@@ -58,6 +60,8 @@ public class PostController {
 			List<Tasks> list = repo.findAll(Sort.by(Sort.Direction.DESC, "id"));
 			model.addAttribute("tasks", list);
 			model.addAttribute("postForm", postForm);
+			model.addAttribute("prev","yyyy-MM-dd");
+			model.addAttribute("next","yyyy-MM-dd");
 			return "/main";
 		}
 
