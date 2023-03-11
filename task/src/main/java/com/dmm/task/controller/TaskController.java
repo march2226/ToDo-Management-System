@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.LinkedMultiValueMap;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import com.dmm.task.data.entity.Tasks;
 import com.dmm.task.data.repository.TasksRepository;
+import com.dmm.task.service.AccountUserDetails;
 
 @Controller
 
@@ -23,7 +25,7 @@ public class TaskController {
 	private TasksRepository repo;
 
 	@GetMapping("/main")
-	public String task(Model model) {
+	public String task(Model model,@AuthenticationPrincipal AccountUserDetails user) {
 		MultiValueMap<LocalDate, Tasks> tasks = new LinkedMultiValueMap<LocalDate, Tasks>();
 		List<List<LocalDate>> month = new ArrayList<>();
 		List<LocalDate> week = new ArrayList<>();
@@ -35,12 +37,12 @@ public class TaskController {
 		day = day.minusDays(w.getValue());
 
 		List<Tasks> list;
-		list = repo.findAll();
+		list = repo.findByDateBetween(start,end,user);
 		for (Tasks t : list) {
 			
-			LocalDate localDate = t.getDate().toLocalDate();
+			LocalDate date = t.getDate().toLocalDate();
 			
-			tasks.add(localDate,t);
+			tasks.add(date,t);
 		}
 
 		for (int i = 1; i <= 7; i++) {
@@ -48,8 +50,10 @@ public class TaskController {
 			day = day.plusDays(1);
 
 			w = day.getDayOfWeek();
+			
+			localDate start=day.getDate();
 
-			System.out.println(i);
+			System.out.println(day);
 
 		}
 		month.add(week);
@@ -64,8 +68,7 @@ public class TaskController {
 
 				week = new ArrayList<>();
 
-				System.out.println(i);
-				System.out.println(w.getValue());
+				System.out.println(day);
 				System.out.println(day.lengthOfMonth());
 			}
 			day = day.plusDays(1);
@@ -75,9 +78,10 @@ public class TaskController {
 		for (int i = 1; i <= nextMonthDays; i++) {
 			week.add(day);
 			day = day.plusDays(1);
-			System.out.println(i);
-			System.out.println(w.getValue());
-		}
+			
+			localDate end=day.getDate();
+			System.out.println(day);
+			}
 		month.add(week);
 		model.addAttribute("tasks", tasks);
 		model.addAttribute("matrix", month);
