@@ -82,13 +82,11 @@ public class PostController {
 		
 		Tasks task = repo.getById(id);
 		
-		LocalDate date = t.getDate().toLocalDatetime();
-		task.add(date,t);
 		model.addAttribute("task", task);
 		task.setName(task.getName());
 		task.setTitle(postForm.getTitle());
 		task.setText(postForm.getText());
-		task.setDate(postForm.getDate());
+		task.setDate(postForm.getDate().atTime(0, 0));
 		task.setDone(postForm.isDone());
 		repo.save(task);
 		return "redirect:/main";
