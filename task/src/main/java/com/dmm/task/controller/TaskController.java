@@ -28,26 +28,23 @@ public class TaskController {
 	public String task(Model model,@AuthenticationPrincipal AccountUserDetails user) {
 		MultiValueMap<LocalDate, Tasks> tasks = new LinkedMultiValueMap<LocalDate, Tasks>();
 		String name = user.getName();
-		LocalDate start;
-		LocalDate end;
 		List<List<LocalDate>> month = new ArrayList<>();
 		List<LocalDate> week = new ArrayList<>();
 		LocalDate day;
 		day = LocalDate.now();
 		day = LocalDate.of(day.getYear(), day.getMonthValue(), 1);
-		start = day;
+		LocalDate start= day;
+		model.addAttribute("prev", day.minusMonths(1));
+		model.addAttribute("next", day.plusMonths(1));
+
 		System.out.println(day);
 
 		DayOfWeek w = day.getDayOfWeek();
 		day = day.minusDays(w.getValue());
-		end = day;
-		
-		System.out.println(day);
 
 		List<Tasks> list;
 		user.getName();
-		list = repo.findByDateBetween(start,end,user.getName().toLocalDate());
-		list = repo.findAllByDateBetween(start.toLocalDate(),end.toLocalDate());
+		list = repo.findAll();
 		for (Tasks t : list) {
 			
 			LocalDate date = t.getDate().toLocalDate();
@@ -61,10 +58,6 @@ public class TaskController {
 
 			w = day.getDayOfWeek();
 			
-			model.addAttribute("prev", day.minusMonths(1));
-			model.addAttribute("next", day.plusMonths(1));
-
-			System.out.println(day);
 
 		}
 		month.add(week);
@@ -79,7 +72,6 @@ public class TaskController {
 
 				week = new ArrayList<>();
 
-				System.out.println(day);
 			}
 			day = day.plusDays(1);
 		}
@@ -88,9 +80,11 @@ public class TaskController {
 		for (int i = 1; i <= nextMonthDays; i++) {
 			week.add(day);
 			day = day.plusDays(1);
-			
+			LocalDate end = day;
+			System.out.println(day);
 			}
 		month.add(week);
+		
 		model.addAttribute("tasks", tasks);
 		model.addAttribute("matrix", month);
 
