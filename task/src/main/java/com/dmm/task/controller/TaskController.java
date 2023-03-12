@@ -26,41 +26,42 @@ public class TaskController {
 	private TasksRepository repo;
 
 	@GetMapping("/main")
-	public String task(Model model,@AuthenticationPrincipal AccountUserDetails user,@DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date) {
+	public String task(Model model, @AuthenticationPrincipal AccountUserDetails user,
+			@DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date) {
 		MultiValueMap<LocalDate, Tasks> tasks = new LinkedMultiValueMap<LocalDate, Tasks>();
-		String name = user.getName();
 		List<List<LocalDate>> month = new ArrayList<>();
 		List<LocalDate> week = new ArrayList<>();
 		LocalDate day;
-		if(date == null) {
-		    // dateが渡ってこなかった場合＝今月
-		    day = LocalDate.now();
-		    day = LocalDate.of(day.getYear(), day.getMonthValue(), 1);
-		}else {
-		    // dateが渡ってきた場合＝前月or翌月。渡ってきたdateをそのまま使う
-		    day = date;
-		    model.addAttribute("prev", day.minusMonths(1));
-			model.addAttribute("next", day.plusMonths(1));
-			return "/main";
+		LocalDate start;
+		LocalDate end;
+		String name = user.getName();
+		if (date == null) {
+			// dateが渡ってこなかった場合＝今月
+			day = LocalDate.now();
+			day = LocalDate.of(day.getYear(), day.getMonthValue(), 1);
+		} else {
+			// dateが渡ってきた場合＝前月or翌月。渡ってきたdateをそのまま使う
+			day = date;
 		}
+		model.addAttribute("prev", day.minusMonths(1));
+		model.addAttribute("next", day.plusMonths(1));
+
 		day = LocalDate.now();
 		day = LocalDate.of(day.getYear(), day.getMonthValue(), 1);
-		LocalDate start= day;
-		LocalDate end = day;
+		start = day;
 
 		System.out.println(day);
 
 		DayOfWeek w = day.getDayOfWeek();
 		day = day.minusDays(w.getValue());
 
-		List<Tasks> list;
-		user.getName();
-		list = repo.findAll();
+		List<Tasks> list = new ArrayList<>();
+		;
 		for (Tasks t : list) {
-			
+
 			LocalDate d = t.getDate().toLocalDate();
-			
-			tasks.add(d,t);
+
+			tasks.add(d, t);
 		}
 
 		for (int i = 1; i <= 7; i++) {
@@ -68,7 +69,6 @@ public class TaskController {
 			day = day.plusDays(1);
 
 			w = day.getDayOfWeek();
-			
 
 		}
 		month.add(week);
@@ -86,16 +86,22 @@ public class TaskController {
 			}
 			day = day.plusDays(1);
 		}
-		//なんか代入
+
+		end = day;
+		list = repo.findByDateBetween(start.atTime(0, 0), end.atTime(0, 0), name);
+		list = repo.findAllByDateBetween(start.atTime(0, 0), end.atTime(0, 0));
+
 		System.out.println(day);
 		w = day.getDayOfWeek();
+
 		int nextMonthDays = 7 - w.getValue();
+
 		for (int i = 1; i <= nextMonthDays; i++) {
 			week.add(day);
 			day = day.plusDays(1);
-			}
+		}
 		month.add(week);
-		
+
 		model.addAttribute("tasks", tasks);
 		model.addAttribute("matrix", month);
 

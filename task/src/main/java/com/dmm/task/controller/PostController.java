@@ -35,7 +35,7 @@ public class PostController {
 	@GetMapping("/main/create/{date}")
 	public String posts(Model model, @PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date) {
 		model.addAttribute("date", date);
-	   		return "/create";
+		return "/create";
 	}
 
 	/**
@@ -75,12 +75,13 @@ public class PostController {
 		return "/edit";
 
 	}
+
 	@PostMapping("/main/edit/{id}")
-	public String edit(@Validated PostForm postForm, BindingResult bindingResult,
-			Model model,@PathVariable Integer id) {
-		
+	public String edit(@Validated PostForm postForm, BindingResult bindingResult, Model model,
+			@PathVariable Integer id) {
+
 		Tasks task = repo.getById(id);
-		
+
 		model.addAttribute("task", task);
 		task.setName(task.getName());
 		task.setTitle(postForm.getTitle());
