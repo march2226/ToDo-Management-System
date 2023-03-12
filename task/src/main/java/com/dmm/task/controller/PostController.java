@@ -81,6 +81,10 @@ public class PostController {
 			Model model,@PathVariable Integer id) {
 		
 		Tasks task = repo.getById(id);
+		
+		Tasks t;
+		LocalDate date = t.getDate().toLocalDate();
+		task.add(date,t);
 		model.addAttribute("task", task);
 		task.setName(task.getName());
 		task.setTitle(postForm.getTitle());

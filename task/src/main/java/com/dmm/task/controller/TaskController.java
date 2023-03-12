@@ -40,7 +40,13 @@ public class TaskController {
 
 		List<Tasks> list;
 		
+		
 		for (Tasks t : list) {
+			LocalDateTime start;
+			LocalDateTime end;
+			name.setUserName(user.getUsername());
+			list = repo.findByDateBetween(start,end,user.getUsername());
+			list = repo.findAllByDateBetween(start,end);
 			
 			LocalDate date = t.getDate().toLocalDate();
 			
@@ -86,12 +92,6 @@ public class TaskController {
 			
 			System.out.println(day);
 			}
-		LocalDateTime start;
-		LocalDateTime end;
-		Tasks task;
-		task.setName(user.getName());
-		list = repo.findByDateBetween(start,end,user.getName());
-		list = repo.findAllByDateBetween(start,end);
 		month.add(week);
 		model.addAttribute("tasks", tasks);
 		model.addAttribute("matrix", month);

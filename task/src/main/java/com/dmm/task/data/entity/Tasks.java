@@ -18,6 +18,7 @@ public class Tasks {
 	private String title;
 	private String name;
 	private String text;
+	private String username;
 	private LocalDateTime date;
 	private boolean done;
 }
