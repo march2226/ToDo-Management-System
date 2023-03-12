@@ -82,8 +82,7 @@ public class PostController {
 		
 		Tasks task = repo.getById(id);
 		
-		Tasks t;
-		LocalDate date = t.getDate().toLocalDate();
+		LocalDate date = t.getDate().toLocalDatetime();
 		task.add(date,t);
 		model.addAttribute("task", task);
 		task.setName(task.getName());

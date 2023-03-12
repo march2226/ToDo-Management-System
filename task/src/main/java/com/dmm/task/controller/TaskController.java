@@ -39,14 +39,12 @@ public class TaskController {
 		day = day.minusDays(w.getValue());
 
 		List<Tasks> list;
-		
-		
+		LocalDateTime start;
+		LocalDateTime end;
+		user.getName();
+		list = repo.findByDateBetween(start,end,user.getName());
+		list = repo.findAllByDateBetween(start,end);
 		for (Tasks t : list) {
-			LocalDateTime start;
-			LocalDateTime end;
-			name.setUserName(user.getUsername());
-			list = repo.findByDateBetween(start,end,user.getUsername());
-			list = repo.findAllByDateBetween(start,end);
 			
 			LocalDate date = t.getDate().toLocalDate();
 			
