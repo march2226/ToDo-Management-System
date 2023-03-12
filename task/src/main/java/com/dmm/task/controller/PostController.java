@@ -1,7 +1,6 @@
 package com.dmm.task.controller;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,7 +61,7 @@ public class PostController {
 		task.setName(user.getName());
 		task.setTitle(postForm.getTitle());
 		task.setText(postForm.getText());
-		task.setDate(LocalDateTime.now());
+		task.setDate(postForm.getDate().atTime(0, 0));
 
 		repo.save(task);
 

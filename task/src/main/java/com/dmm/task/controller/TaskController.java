@@ -34,6 +34,7 @@ public class TaskController {
 		day = LocalDate.now();
 		day = LocalDate.of(day.getYear(), day.getMonthValue(), 1);
 		LocalDate start= day;
+		LocalDate end = day;
 		model.addAttribute("prev", day.minusMonths(1));
 		model.addAttribute("next", day.plusMonths(1));
 
@@ -44,7 +45,8 @@ public class TaskController {
 
 		List<Tasks> list;
 		user.getName();
-		list = repo.findAll();
+		list = repo.findByDateBetween(start.atTime(0, 0),end.atTime(0, 0),name);
+		list = repo.findAllByDateBetween(start.atTime(0, 0),end.atTime(0, 0));
 		for (Tasks t : list) {
 			
 			LocalDate date = t.getDate().toLocalDate();
@@ -75,7 +77,7 @@ public class TaskController {
 			}
 			day = day.plusDays(1);
 		}
-		LocalDate end = day;
+		//なんか代入
 		System.out.println(day);
 		w = day.getDayOfWeek();
 		int nextMonthDays = 7 - w.getValue();
