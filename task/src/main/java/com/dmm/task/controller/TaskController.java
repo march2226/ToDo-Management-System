@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,18 +26,27 @@ public class TaskController {
 	private TasksRepository repo;
 
 	@GetMapping("/main")
-	public String task(Model model,@AuthenticationPrincipal AccountUserDetails user) {
+	public String task(Model model,@AuthenticationPrincipal AccountUserDetails user,@DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date) {
 		MultiValueMap<LocalDate, Tasks> tasks = new LinkedMultiValueMap<LocalDate, Tasks>();
 		String name = user.getName();
 		List<List<LocalDate>> month = new ArrayList<>();
 		List<LocalDate> week = new ArrayList<>();
 		LocalDate day;
+		if(date == null) {
+		    // dateが渡ってこなかった場合＝今月
+		    day = LocalDate.now();
+		    day = LocalDate.of(day.getYear(), day.getMonthValue(), 1);
+		}else {
+		    // dateが渡ってきた場合＝前月or翌月。渡ってきたdateをそのまま使う
+		    day = date;
+		    model.addAttribute("prev", day.minusMonths(1));
+			model.addAttribute("next", day.plusMonths(1));
+			return "/main";
+		}
 		day = LocalDate.now();
 		day = LocalDate.of(day.getYear(), day.getMonthValue(), 1);
 		LocalDate start= day;
 		LocalDate end = day;
-		model.addAttribute("prev", day.minusMonths(1));
-		model.addAttribute("next", day.plusMonths(1));
 
 		System.out.println(day);
 
@@ -45,13 +55,12 @@ public class TaskController {
 
 		List<Tasks> list;
 		user.getName();
-		list = repo.findByDateBetween(start.atTime(0, 0),end.atTime(0, 0),name);
-		list = repo.findAllByDateBetween(start.atTime(0, 0),end.atTime(0, 0));
+		list = repo.findAll();
 		for (Tasks t : list) {
 			
-			LocalDate date = t.getDate().toLocalDate();
+			LocalDate d = t.getDate().toLocalDate();
 			
-			tasks.add(date,t);
+			tasks.add(d,t);
 		}
 
 		for (int i = 1; i <= 7; i++) {
