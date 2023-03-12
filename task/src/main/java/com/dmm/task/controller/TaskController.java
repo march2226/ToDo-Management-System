@@ -75,13 +75,13 @@ public class TaskController {
 			}
 			day = day.plusDays(1);
 		}
+		LocalDate end = day;
+		System.out.println(day);
 		w = day.getDayOfWeek();
 		int nextMonthDays = 7 - w.getValue();
 		for (int i = 1; i <= nextMonthDays; i++) {
 			week.add(day);
 			day = day.plusDays(1);
-			LocalDate end = day;
-			System.out.println(day);
 			}
 		month.add(week);
 		
