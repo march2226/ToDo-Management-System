@@ -46,7 +46,6 @@ public class TaskController {
 		model.addAttribute("prev", day.minusMonths(1));
 		model.addAttribute("next", day.plusMonths(1));
 
-		day = LocalDate.now();
 		day = LocalDate.of(day.getYear(), day.getMonthValue(), 1);
 		start = day;
 
@@ -54,15 +53,6 @@ public class TaskController {
 
 		DayOfWeek w = day.getDayOfWeek();
 		day = day.minusDays(w.getValue());
-
-		List<Tasks> list = new ArrayList<>();
-		;
-		for (Tasks t : list) {
-
-			LocalDate d = t.getDate().toLocalDate();
-
-			tasks.add(d, t);
-		}
 
 		for (int i = 1; i <= 7; i++) {
 			week.add(day);
@@ -88,8 +78,20 @@ public class TaskController {
 		}
 
 		end = day;
-		list = repo.findByDateBetween(start.atTime(0, 0), end.atTime(0, 0), name);
-		list = repo.findAllByDateBetween(start.atTime(0, 0), end.atTime(0, 0));
+		List<Tasks> list;
+		System.out.println(name);
+		if(name=="user") {
+			list = repo.findByDateBetween(start.atTime(0, 0), end.atTime(0, 0), name);
+		}else {
+			list = repo.findAllByDateBetween(start.atTime(0, 0), end.atTime(0, 0));
+		}
+		
+		for (Tasks t : list) {
+
+			LocalDate d = t.getDate().toLocalDate();
+
+			tasks.add(d, t);
+		}
 
 		System.out.println(day);
 		w = day.getDayOfWeek();
