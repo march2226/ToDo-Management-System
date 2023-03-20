@@ -2,6 +2,7 @@ package com.dmm.task.controller;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,6 +44,8 @@ public class TaskController {
 			// dateが渡ってきた場合＝前月or翌月。渡ってきたdateをそのまま使う
 			day = date;
 		}
+		DateTimeFormatter f = DateTimeFormatter.ofPattern("2023年3月");
+		model.addAttribute("month",f);
 		model.addAttribute("prev", day.minusMonths(1));
 		model.addAttribute("next", day.plusMonths(1));
 
@@ -80,7 +83,8 @@ public class TaskController {
 		end = day;
 		List<Tasks> list;
 		System.out.println(name);
-		if(name=="user") {
+		boolean c=name.equals("user-name");
+		if(c) {
 			list = repo.findByDateBetween(start.atTime(0, 0), end.atTime(0, 0), name);
 		}else {
 			list = repo.findAllByDateBetween(start.atTime(0, 0), end.atTime(0, 0));
