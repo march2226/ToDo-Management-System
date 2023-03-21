@@ -44,8 +44,9 @@ public class TaskController {
 			// dateが渡ってきた場合＝前月or翌月。渡ってきたdateをそのまま使う
 			day = date;
 		}
-		DateTimeFormatter f = DateTimeFormatter.ofPattern("2023年3月");
-		model.addAttribute("month",f);
+		String f = "2023年3月";
+		String Str = f.format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
+		model.addAttribute("month", f);
 		model.addAttribute("prev", day.minusMonths(1));
 		model.addAttribute("next", day.plusMonths(1));
 
@@ -83,13 +84,13 @@ public class TaskController {
 		end = day;
 		List<Tasks> list;
 		System.out.println(name);
-		boolean c=name.equals("user-name");
-		if(c) {
+		boolean c = name.equals("user-name");
+		if (c) {
 			list = repo.findByDateBetween(start.atTime(0, 0), end.atTime(0, 0), name);
-		}else {
+		} else {
 			list = repo.findAllByDateBetween(start.atTime(0, 0), end.atTime(0, 0));
 		}
-		
+
 		for (Tasks t : list) {
 
 			LocalDate d = t.getDate().toLocalDate();
