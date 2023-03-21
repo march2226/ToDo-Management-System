@@ -44,9 +44,10 @@ public class TaskController {
 			// dateが渡ってきた場合＝前月or翌月。渡ってきたdateをそのまま使う
 			day = date;
 		}
-		String f = "2023年3月";
-		String Str = f.format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
-		model.addAttribute("month", f);
+		String f = "2023/03/01";
+		LocalDate q = LocalDate.parse(f, DateTimeFormatter.ofPattern("yyyy/MM/dd"));
+		String Str = q.format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
+		model.addAttribute("month", Str);
 		model.addAttribute("prev", day.minusMonths(1));
 		model.addAttribute("next", day.plusMonths(1));
 
