@@ -46,7 +46,7 @@ public class TaskController {
 		}
 		String f = "2023/03/01";
 		LocalDate q = LocalDate.parse(f, DateTimeFormatter.ofPattern("yyyy/MM/dd"));
-		String Str = q.format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
+		String Str = q.format(DateTimeFormatter.ofPattern("yyyy/MM"));
 		model.addAttribute("month", Str);
 		model.addAttribute("prev", day.minusMonths(1));
 		model.addAttribute("next", day.plusMonths(1));
