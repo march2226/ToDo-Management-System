@@ -32,9 +32,12 @@ public class TaskController {
 		MultiValueMap<LocalDate, Tasks> tasks = new LinkedMultiValueMap<LocalDate, Tasks>();
 		List<List<LocalDate>> month = new ArrayList<>();
 		List<LocalDate> week = new ArrayList<>();
-		LocalDate day;
+		
 		LocalDate start;
 		LocalDate end;
+		String f = "2023/03/01";
+		LocalDate day = LocalDate.parse(f, DateTimeFormatter.ofPattern("yyyy/MM/dd"));
+		
 		String name = user.getName();
 		if (date == null) {
 			// dateが渡ってこなかった場合＝今月
@@ -44,13 +47,12 @@ public class TaskController {
 			// dateが渡ってきた場合＝前月or翌月。渡ってきたdateをそのまま使う
 			day = date;
 		}
-		String f = "2023/03/01";
-		LocalDate q = LocalDate.parse(f, DateTimeFormatter.ofPattern("yyyy/MM/dd"));
-		String Str = q.format(DateTimeFormatter.ofPattern("yyyy年MM月"));
+		
+		model.addAttribute("month", day);
+		String Str = day.format(DateTimeFormatter.ofPattern("yyyy年MM月"));
 		model.addAttribute("month", Str);
 		model.addAttribute("prev", day.minusMonths(1));
 		model.addAttribute("next", day.plusMonths(1));
-		model.addAttribute("month", day);
 		
 		day = LocalDate.of(day.getYear(), day.getMonthValue(), 1);
 		start = day;
