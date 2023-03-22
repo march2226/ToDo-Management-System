@@ -50,7 +50,8 @@ public class TaskController {
 		model.addAttribute("month", Str);
 		model.addAttribute("prev", day.minusMonths(1));
 		model.addAttribute("next", day.plusMonths(1));
-
+		model.addAttribute("month", day);
+		
 		day = LocalDate.of(day.getYear(), day.getMonthValue(), 1);
 		start = day;
 
